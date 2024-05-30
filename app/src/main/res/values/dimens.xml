@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="rv_vSpacing">4dp</dimen>
+    <dimen name="rv_hSpacing">0dp</dimen>
+</resources>

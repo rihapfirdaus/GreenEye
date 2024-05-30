@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_menu_find"
+        android:icon="@drawable/selector_camera"
+        android:title="@string/menu_find" />
+    <item
+        android:id="@+id/item_menu_home"
+        android:icon="@drawable/selector_home"
+        android:title="@string/menu_home" />
+    <item
+        android:id="@+id/item_menu_mark"
+        android:icon="@drawable/selector_mark"
+        android:title="@string/menu_mark" />
+</menu>

@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">GreenEye</string>
+    <string name="btn_continue">Lanjutkan</string>
+    <string name="tv_agreement">Dengan melanjutkan anda menyetujui syarat dan ketentuan yang berlaku.</string>
+    <string name="app_desc">Kenali tumbuhan di sekitar anda</string>
+    <string name="menu_find">Pindai</string>
+    <string name="menu_home">Beranda</string>
+    <string name="menu_mark">Tersimpan</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hint_search_bar">Cari Tumbuhan</string>
+    <string name="cd_share">bagikan</string>
+    <string name="cd_close">kembali ke beranda</string>
+    <string name="cd_mark">simpan tumbuhan ini</string>
+    <string name="btn_gallery">Galeri</string>
+    <string name="btn_camera">kamera</string>
+    <string name="tv_pick_image">Upload gambar buat dipindai</string>
+    <string name="toast_failed_pick_image">Gagal mengambil gambar, silakan coba lagi</string>
+    <string name="btn_change">Ganti/Batal</string>
+    <string name="btn_scan">Pindai</string>
+    <string name="cd_preview">pratinjau gambar</string>
+    <string name="tv_mark">Tersimpan</string>
+    <string name="tv_empty">Ga ada apa-apa disini</string>
+    <string name="sample_info_plant">
+        Delima (Punica granatum) adalah tanaman buah-buahan yang berasal dari Iran dan tersebar di wilayah Mediterania hingga Asia Tenggara. Tanaman ini berbentuk perdu atau pohon kecil dengan tinggi 2-8 meter, berdaun tunggal, dan berduri pada ketiaknya. Bunga delima berwarna merah, putih, atau ungu serta berbuah buah buni berbentuk bulat dengan diameter 5-12 cm, dan kulitnya berwarna beragam seperti hijau keunguan, putih, cokelat kemerahan, atau ungu kehitaman. Bijinya kecil, keras, dan berwarna merah, merah jambu, atau putih tersusun tidak beraturan di dalam buah. \n
+        Berikut adalah manfaat buah delima:\n
+        &#8226; Melembabkan dan meningkatkan regenerasi kulit, mengurangi tanda-tanda penuaan, mengatasi peradangan dari jerawat, serta merangsang produksi kolagen.\n
+        &#8226; Mengurangi derita radang tenggorokan.\n
+        &#8226; Mencegah oksidasi LDL atau kolesterol jahat dalam tubuh berkat kandungan antioksidan yang tinggi.\n
+        &#8226; Mencegah kanker.\n
+        &#8226; Membantu menurunkan berat badan.\n
+        &#8226; Meningkatkan kekebalan tubuh.\n
+        &#8226; Menurunkan hipertensi.\n
+        &#8226; Meringankan artritis dan nyeri sendi.\n
+        &#8226; Kaya kandungan ion kalium, vitamin A, C, E, serta asam folat yang penting bagi kesehatan jantung.\n
+        &#8226; Kandungan flavonoid dan antioksidan yang tinggi berperan dalam mencegah radikal bebas, memperbaiki sel-sel tubuh yang rusak, serta memberikan perlindungan terhadap penyakit jantung, kanker kulit, dan kanker prostat.\n
+        &#8226; Membantu mencegah penyumbatan pada pembuluh darah arteri oleh kolesterol.\n
+        &#8226; Menurunkan risiko terkena alzheimer.
+    </string>
+    <string name="sample_scientific_name">Punica granatum</string>
+    <string name="sample_plant_name">Delima</string>
+    <string name="tv_mostly_search">Paling sering dicari</string>
+    <string name="tv_history">Terakhir dilihat</string>
+    <string name="tv_popular">Paling sering dicari</string>
+    <string name="share_via">Bagikan Tumbuhan Ini</string>
+    <string name="searchbar_hint">Masukkan nama tumbuhan</string>
+</resources>

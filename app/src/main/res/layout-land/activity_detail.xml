@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".ui.detail.DetailActivity">
+
+    <ImageView
+        android:id="@+id/iv_plant"
+        android:layout_width="350dp"
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sample_image_plant"
+        android:transitionName="plant_image" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_right_view"
+        android:layout_marginStart="-32dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_plant_name"
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sample_plant_name"
+                    android:textColor="?attr/colorPrimary"
+                    android:transitionName="plant_name"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_share"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_scientific_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sample_scientific_name"
+                    android:textColor="?attr/colorSecondary"
+                    android:textStyle="italic"
+                    android:transitionName="scientific_name"
+                    app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_share"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_plant_name" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btn_share"
+                style="@style/imageButton"
+                android:contentDescription="@string/cd_share"
+                android:src="@drawable/ic_share" />
+
+            <ImageButton
+                android:id="@+id/btn_mark"
+                style="@style/imageButton"
+                android:contentDescription="@string/cd_mark"
+                android:src="@drawable/ic_bookmark_outline" />
+
+            <ImageButton
+                android:id="@+id/btn_close"
+                style="@style/imageButton"
+                android:contentDescription="@string/cd_close"
+                android:src="@drawable/ic_close" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="?attr/colorBackgroundFloating"
+            android:paddingVertical="8dp"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_scientific_name">
+
+            <TextView
+                android:id="@+id/tv_plant_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/sample_info_plant" />
+        </ScrollView>
+    </LinearLayout>
+
+</LinearLayout>
