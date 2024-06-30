@@ -43,4 +43,14 @@
     <string name="tv_popular">Paling sering dicari</string>
     <string name="share_via">Bagikan Tumbuhan Ini</string>
     <string name="searchbar_hint">Masukkan nama tumbuhan</string>
+    <string name="tv_not_found">Yahh.. ga ketemu nih..\nTunggu update dari kami ya..</string>
+    <string name="btn_back">Kembali ke beranda</string>
+    <string name="cd_result_image">hasil gambar prediksi</string>
+    <string name="akurasi">akurasi: %1$s</string>
+    <string name="toast_failed_fetch_data">gagal mengambil data</string>
+    <string name="toast_mark_plant_removed">Tumbuhan dihapus dari tersimpan</string>
+    <string name="toast_mark_plant_remove_failed">Tumbuhan gagal dihapus dari tersimpan</string>
+    <string name="toast_mark_plant_added">Tumbuhan ditambahkan ke tersimpan</string>
+    <string name="toast_mark_plant_add_failed">Tumbuhan gagal ditambahkan ke tersimpan</string>
+    <string name="toast_pick_image_first">Pilih/ambil gambar terlebih dahulu</string>
 </resources>
