@@ -35,6 +35,7 @@ class WelcomeActivity : AppCompatActivity() {
 
             viewModel.getSession().observe(this@WelcomeActivity) { session ->
                 if (session) {
+                    showLoading(false)
                     Intent(this@WelcomeActivity, MainActivity::class.java).also {
                         startActivity(it)
                     }
