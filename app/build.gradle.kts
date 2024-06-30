@@ -27,6 +27,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+
+            buildConfigField("String", "API_BASE_URL", "${BASE_URL}")
+        }
+
+        debug {
+            buildConfigField("String", "API_BASE_URL", "\"${BASE_URL}\"")
         }
     }
 
@@ -74,6 +80,9 @@ dependencies {
 
     implementation(libs.lottie)
     implementation(libs.androidx.fragment.ktx)
+
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
 }
 
 kapt {
