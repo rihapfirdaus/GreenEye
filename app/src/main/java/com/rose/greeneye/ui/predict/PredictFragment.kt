@@ -1,5 +1,6 @@
-package com.rose.greeneye.ui.find
+package com.rose.greeneye.ui.predict
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,26 +10,34 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.rose.greeneye.R
 import com.rose.greeneye.Utils.getImageUri
+import com.rose.greeneye.Utils.reduceFileImage
 import com.rose.greeneye.Utils.showToast
-import com.rose.greeneye.databinding.FragmentFindBinding
+import com.rose.greeneye.Utils.uriToFile
+import com.rose.greeneye.databinding.FragmentPredictBinding
+import com.rose.greeneye.ui.result.ResultActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 
 @AndroidEntryPoint
-class FindFragment : Fragment() {
-    private lateinit var binding: FragmentFindBinding
+class PredictFragment : Fragment() {
+    private lateinit var binding: FragmentPredictBinding
     private var currentImageUri: Uri? = null
 
-    private val viewModel: FindViewModel by viewModels()
+    private val viewModel: PredictViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentFindBinding.inflate(inflater, container, false)
+        binding = FragmentPredictBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -59,7 +68,51 @@ class FindFragment : Fragment() {
             btnChange.setOnClickListener {
                 viewModel.setCurrentImageUri(null)
             }
+
+            btnScan.setOnClickListener {
+                handlePredict()
+            }
         }
+    }
+
+    private fun handlePredict() {
+        currentImageUri?.let { uri ->
+            binding.progressCircular.visibility = View.VISIBLE
+
+            val imageFile = uriToFile(uri, requireContext()).reduceFileImage()
+            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+            val multipartBody =
+                MultipartBody.Part.createFormData(
+                    "file",
+                    imageFile.name,
+                    requestImageFile,
+                )
+
+            lifecycleScope.launch {
+                viewModel.predictPlant(file = multipartBody).collect { response ->
+                    response.onSuccess {
+                        binding.progressCircular.visibility = View.GONE
+
+                        it.data.also {
+                            Intent(requireContext(), ResultActivity::class.java).apply {
+                                putExtra(ResultActivity.EXTRA_IMAGE_PATH, currentImageUri.toString())
+                                putExtra(ResultActivity.EXTRA_ID_PLANT, it.index)
+                                putExtra(ResultActivity.EXTRA_PLANT_NAME, it.plants.idName)
+                                putExtra(ResultActivity.EXTRA_SCIENTIFIC_NAME, it.plants.scienceName)
+                                putExtra(ResultActivity.EXTRA_ORGANS, it.organs)
+                                putExtra(ResultActivity.EXTRA_ACCURACY, it.accuracy)
+                            }.also {
+                                startActivity(it)
+                            }
+                        }
+                    }
+                    response.onFailure {
+                        binding.progressCircular.visibility = View.GONE
+                        showToast(requireContext(), "${it.message}")
+                    }
+                }
+            }
+        } ?: showToast(requireContext(), getString(R.string.toast_pick_image_first))
     }
 
     private fun startGallery() {
