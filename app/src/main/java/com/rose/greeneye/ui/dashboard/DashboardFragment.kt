@@ -6,25 +6,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemClickListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.rose.greeneye.R
-import com.rose.greeneye.Utils.getDummyList
+import com.rose.greeneye.Utils.showToast
 import com.rose.greeneye.adapter.CarouselAdapter
-import com.rose.greeneye.adapter.ListItemAdapter
-import com.rose.greeneye.data.local.PlantModel
+import com.rose.greeneye.adapter.HistoryItemAdapter
+import com.rose.greeneye.data.local.entity.HistoryEntity
+import com.rose.greeneye.data.remote.response.DataPlantResponse
 import com.rose.greeneye.databinding.FragmentDashboardBinding
 import com.rose.greeneye.ui.detail.DetailActivity
-import com.rose.greeneye.ui.result.ResultActivity
+import com.rose.greeneye.ui.find.FindActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DashboardFragment :
     Fragment(),
     CarouselAdapter.OnCarouselClickListener,
-    ListItemAdapter.OnItemClickListener {
+    HistoryItemAdapter.OnItemClickListener {
     private lateinit var binding: FragmentDashboardBinding
+    private lateinit var listItemAdapter: HistoryItemAdapter
+    private val viewModel: DashboardViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,15 +46,28 @@ class DashboardFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dummyList = getDummyList(requireContext())
+        viewModel.getPlants().observe(viewLifecycleOwner) { response ->
+            response.onSuccess {
+                val carouselAdapter = CarouselAdapter(it.data, requireContext(), this)
+                binding.apply {
+                    tvPopular.visibility = View.VISIBLE
+                    rvPopular.visibility = View.VISIBLE
+                    rvPopular.layoutManager = CarouselLayoutManager()
+                    rvPopular.adapter = carouselAdapter
+                }
+            }
+            response.onFailure {
+                binding.apply {
+                    tvPopular.visibility = View.GONE
+                    rvPopular.visibility = View.GONE
+                }
+                showToast(requireContext(), getString(R.string.toast_failed_fetch_data))
+            }
+        }
 
-        val carouselAdapter = CarouselAdapter(dummyList, requireContext(), this)
-        val listItemAdapter = ListItemAdapter(ListItemAdapter.HORIZONTAL_TYPE, this)
+        listItemAdapter = HistoryItemAdapter(this)
 
         binding.apply {
-            rvPopular.layoutManager = CarouselLayoutManager()
-            rvPopular.adapter = carouselAdapter
-
             rvHistory.layoutManager = LinearLayoutManager(requireContext())
             rvHistory.adapter = listItemAdapter
             rvHistory.addItemDecoration(
@@ -69,11 +87,27 @@ class DashboardFragment :
                 },
             )
 
-            listItemAdapter.submitList(dummyList)
-
             searchBar.setOnClickListener {
-                Intent(requireContext(), ResultActivity::class.java).also {
+                Intent(requireContext(), FindActivity::class.java).also {
                     startActivity(it)
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.getHistories().observe(viewLifecycleOwner) { response ->
+            response.onSuccess {
+                if (it.isEmpty()) {
+                    binding.tvHistory.visibility = View.GONE
+                    binding.rvHistory.visibility = View.GONE
+                } else {
+                    binding.tvHistory.visibility = View.VISIBLE
+                    binding.rvHistory.visibility = View.VISIBLE
+
+                    listItemAdapter.submitList(it)
                 }
             }
         }
@@ -81,18 +115,22 @@ class DashboardFragment :
 
     override fun onCarouselClick(
         position: Int,
-        item: PlantModel,
+        item: DataPlantResponse,
     ) {
-        Intent(requireContext(), DetailActivity::class.java).also {
+        Intent(requireContext(), DetailActivity::class.java).apply {
+            putExtra(DetailActivity.EXTRA_ID_PLANT, item.index)
+        }.also {
             startActivity(it)
         }
     }
 
     override fun onListItemClick(
         position: Int,
-        item: PlantModel,
+        item: HistoryEntity,
     ) {
-        Intent(requireContext(), DetailActivity::class.java).also {
+        Intent(requireContext(), DetailActivity::class.java).apply {
+            putExtra(DetailActivity.EXTRA_ID_PLANT, item.index)
+        }.also {
             startActivity(it)
         }
     }
