@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.rose.greeneye.data.local.PlantModel
+import com.rose.greeneye.data.remote.response.DataPlantResponse
 import com.rose.greeneye.databinding.LayoutItemHorizontalBinding
 import com.rose.greeneye.databinding.LayoutItemVerticalBinding
 
@@ -14,11 +14,11 @@ class ListItemAdapter(
     private val type: String = HORIZONTAL_TYPE,
     private val onItemClickListener: OnItemClickListener,
 ) :
-    ListAdapter<PlantModel, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+    ListAdapter<DataPlantResponse, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
     interface OnItemClickListener {
         fun onListItemClick(
             position: Int,
-            item: PlantModel,
+            item: DataPlantResponse,
         )
     }
 
@@ -60,15 +60,15 @@ class ListItemAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             position: Int,
-            item: PlantModel,
+            item: DataPlantResponse,
         ) {
             binding.apply {
                 Glide.with(binding.root.context)
-                    .load(item.imageUri)
+                    .load(item.imageUrl[3])
                     .into(binding.ivPlant)
 
-                tvPlantName.text = item.plant_name
-                tvScientificName.text = item.scientific_name
+                tvPlantName.text = item.idName
+                tvScientificName.text = item.scienceName
             }
             binding.root.setOnClickListener {
                 onItemClickListener.onListItemClick(position, item)
@@ -80,15 +80,15 @@ class ListItemAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             position: Int,
-            item: PlantModel,
+            item: DataPlantResponse,
         ) {
             binding.apply {
                 Glide.with(binding.root.context)
-                    .load(item.imageUri)
+                    .load(item.imageUrl[2])
                     .into(binding.ivPlant)
 
-                tvPlantName.text = item.plant_name
-                tvScientificName.text = item.scientific_name
+                tvPlantName.text = item.idName
+                tvScientificName.text = item.scienceName
             }
             binding.root.setOnClickListener {
                 onItemClickListener.onListItemClick(position, item)
@@ -98,17 +98,17 @@ class ListItemAdapter(
 
     companion object {
         val DIFF_CALLBACK =
-            object : DiffUtil.ItemCallback<PlantModel>() {
+            object : DiffUtil.ItemCallback<DataPlantResponse>() {
                 override fun areItemsTheSame(
-                    oldItem: PlantModel,
-                    newItem: PlantModel,
+                    oldItem: DataPlantResponse,
+                    newItem: DataPlantResponse,
                 ): Boolean {
                     return oldItem == newItem
                 }
 
                 override fun areContentsTheSame(
-                    oldItem: PlantModel,
-                    newItem: PlantModel,
+                    oldItem: DataPlantResponse,
+                    newItem: DataPlantResponse,
                 ): Boolean {
                     return oldItem == newItem
                 }
