@@ -5,19 +5,20 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import android.view.View
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StyleSpan
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getString
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
 import com.airbnb.lottie.BuildConfig
-import com.google.android.material.snackbar.Snackbar
-import com.rose.greeneye.data.local.PlantModel
+import com.rose.greeneye.data.remote.response.DataPlantResponse
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -37,13 +38,6 @@ object Utils {
         message: String,
     ) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
-
-    fun showSnackbar(
-        view: View,
-        message: String,
-    ) {
-        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
     }
 
     fun getImageUri(context: Context): Uri {
@@ -147,22 +141,6 @@ object Utils {
         )
     }
 
-    fun getDummyList(context: Context): ArrayList<PlantModel> {
-        val plantList = arrayListOf<PlantModel>()
-
-        for (i in 1..5) {
-            plantList.add(
-                PlantModel(
-                    plant_name = context.getString(R.string.sample_plant_name),
-                    scientific_name = context.getString(R.string.sample_scientific_name),
-                    imageUri = Uri.parse("android.resource://${context.packageName}/" + R.drawable.sample_image_plant),
-                ),
-            )
-        }
-
-        return plantList
-    }
-
     fun ImageView.getBitmap(): Bitmap {
         this.isDrawingCacheEnabled = true
         this.buildDrawingCache()
@@ -182,5 +160,40 @@ object Utils {
         outputStream.flush()
         outputStream.close()
         return FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", imageFile)
+    }
+
+    fun getFormattedText(plant: DataPlantResponse): SpannableString {
+        val text = "${plant.description}\n\nBenefit:\n${plant.benefits}\n\nEfek:\n${plant.effects}\n\nTips:\n${plant.tips}"
+
+        val spannableString = SpannableString(text)
+
+        val benefitStart = text.indexOf("Benefit:")
+        val benefitEnd = benefitStart + "Benefit:".length
+        spannableString.setSpan(
+            StyleSpan(Typeface.BOLD),
+            benefitStart,
+            benefitEnd,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+        )
+
+        val efekStart = text.indexOf("Efek:")
+        val efekEnd = efekStart + "Efek:".length
+        spannableString.setSpan(
+            StyleSpan(Typeface.BOLD),
+            efekStart,
+            efekEnd,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+        )
+
+        val tipsStart = text.indexOf("Tips:")
+        val tipsEnd = tipsStart + "Tips:".length
+        spannableString.setSpan(
+            StyleSpan(Typeface.BOLD),
+            tipsStart,
+            tipsEnd,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+        )
+
+        return spannableString
     }
 }
