@@ -52,16 +52,16 @@ class MainActivity : AppCompatActivity() {
 
             bottomNavigationView.selectedItemId = R.id.item_menu_home
 
-            binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            bottomNavigationView.setOnNavigationItemSelectedListener { item ->
                 when (item.itemId) {
-                    R.id.item_menu_find -> viewModel.setCurrentPage(0)
+                    R.id.item_menu_predict -> viewModel.setCurrentPage(0)
                     R.id.item_menu_home -> viewModel.setCurrentPage(1)
                     R.id.item_menu_mark -> viewModel.setCurrentPage(2)
                 }
                 true
             }
 
-            binding.viewPager.registerOnPageChangeCallback(
+            viewPager.registerOnPageChangeCallback(
                 object :
                     ViewPager2.OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                         viewModel.setCurrentPage(position)
                         val itemId =
                             when (position) {
-                                0 -> R.id.item_menu_find
+                                0 -> R.id.item_menu_predict
                                 1 -> R.id.item_menu_home
                                 else -> R.id.item_menu_mark
                             }
