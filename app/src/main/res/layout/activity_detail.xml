@@ -14,7 +14,7 @@
         android:layout_height="240dp"
         android:importantForAccessibility="no"
         android:scaleType="centerCrop"
-        android:src="@drawable/sample_image_plant"
+        tools:src="@drawable/sample_image_plant"
         android:transitionName="plant_image" />
 
     <LinearLayout
@@ -44,7 +44,7 @@
                     style="@style/TextAppearance.MaterialComponents.Headline5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/sample_plant_name"
+                    tools:text="@string/sample_plant_name"
                     android:textColor="?attr/colorPrimary"
                     android:transitionName="plant_name"
                     app:layout_constraintEnd_toStartOf="@+id/btn_share"
@@ -55,7 +55,7 @@
                     android:id="@+id/tv_scientific_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/sample_scientific_name"
+                    tools:text="@string/sample_scientific_name"
                     android:textColor="?attr/colorSecondary"
                     android:textStyle="italic"
                     android:transitionName="scientific_name"
@@ -100,8 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:text="@string/sample_info_plant" />
+                tools:text="@string/sample_info_plant" />
         </ScrollView>
     </LinearLayout>
-
 </LinearLayout>
