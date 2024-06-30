@@ -5,18 +5,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.rose.greeneye.data.local.PlantModel
+import com.rose.greeneye.data.remote.response.DataPlantResponse
 import com.rose.greeneye.databinding.LayoutCarouselItemBinding
 
 class CarouselAdapter(
-    private val list: ArrayList<PlantModel>,
+    private val list: List<DataPlantResponse>,
     private val context: Context,
     private val onCarouselClickListener: OnCarouselClickListener,
 ) : RecyclerView.Adapter<CarouselAdapter.ItemViewHolder>() {
     interface OnCarouselClickListener {
         fun onCarouselClick(
             position: Int,
-            item: PlantModel,
+            item: DataPlantResponse,
         )
     }
 
@@ -47,17 +47,17 @@ class CarouselAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             position: Int,
-            item: PlantModel,
+            item: DataPlantResponse,
         ) {
             binding.apply {
-                Glide.with(binding.root.context)
-                    .load(item.imageUri)
-                    .into(binding.ivPlantImage)
+                Glide.with(root.context)
+                    .load(item.imageUrl[2])
+                    .into(ivPlantImage)
 
-                tvPlantName.text = item.plant_name
-                tvScientificName.text = item.scientific_name
+                tvPlantName.text = item.idName
+                tvScientificName.text = item.scienceName
 
-                binding.root.setOnClickListener {
+                root.setOnClickListener {
                     onCarouselClickListener.onCarouselClick(position, item)
                 }
             }
